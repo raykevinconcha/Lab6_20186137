@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,7 +108,10 @@ public class Memory extends AppCompatActivity {
         subirImagen();
         volver_ajugar();
         imagenesd=imagenes_aleatorias(pokemones.length);
-
+        for(int i=0; i<tablero.length; i++){
+            tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
+            tablero[i].setImageResource(cubrir);
+        }
     }
 
     private ArrayList<Integer> imagenes_aleatorias(int longitud){
