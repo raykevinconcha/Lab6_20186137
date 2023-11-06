@@ -13,10 +13,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button buttonPuzzle = findViewById(R.id.buttonPuzzle);
+        Button buttonMemory = findViewById(R.id.buttonMemory);
         buttonPuzzle.setOnClickListener(v -> {
             Intent intent = new Intent(this, Puzzle.class);
             startActivity(intent);
         });
+
+        buttonMemory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, Memory.class);
+            startActivity(intent);
+        });
+
 
 
     }
