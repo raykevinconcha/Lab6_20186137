@@ -37,7 +37,7 @@ public class Memory extends AppCompatActivity {
     int cubrir;
     ArrayList<Integer> imagenesd;
     ImageButton img;
-    int pokemon_a, pokemon_b;
+    int pokemon_a,pokemon_b;
     boolean bloquear = false;
     final Handler handler=new Handler();
     @Override
@@ -104,6 +104,42 @@ public class Memory extends AppCompatActivity {
             }
         });
     }
+    private void correr(int x,final ImageButton imgb){
+        if(img==null){
+            img=imgb;
+            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            img.setImageResource(pokemones[imagenesd.get(x)]);
+            img.setEnabled(false);
+            pokemon_a=imagenesd.get(x);
+        }else {
+            bloquear=true;
+            imgb.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imgb.setImageResource(pokemones[imagenesd.get(x)]);
+            imgb.setEnabled(false);
+            pokemon_b=imagenesd.get(x);
+            if(pokemon_a==pokemon_b){
+                img=null;
+                bloquear=false;
+
+            }
+            else {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        img.setImageResource(cubrir);
+                        img.setEnabled(true);
+                        imgb.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        imgb.setImageResource(cubrir);
+                        imgb.setEnabled(true);
+                        bloquear=false;
+                        img=null;
+                    }
+                },1000);
+            }
+        }
+
+    }
     private  void iniciar_memoria(){
         subirImagen();
         volver_ajugar();
@@ -112,6 +148,27 @@ public class Memory extends AppCompatActivity {
             tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
             tablero[i].setImageResource(cubrir);
         }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i<tablero.length; i++){
+                    tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    tablero[i].setImageResource(cubrir);
+                }
+            }
+        }, 100);
+        for(int i=0;i<tablero.length;i++){
+            final int x=i;
+            tablero[i].setEnabled(true);
+            tablero[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!bloquear)
+                        correr(x,tablero[x]);
+                }
+            });
+        }
+
     }
 
     private ArrayList<Integer> imagenes_aleatorias(int longitud){
